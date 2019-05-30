@@ -24,13 +24,12 @@ function checkToken(req) {
 
 class Profiles {
     constructor(app, data) {
-        app.get('/api/profiles/:id', function (request, response) {
+        app.get('/api/profiles/:name', function (request, response) {
             let check = false;
             check = checkToken(request);
             if (check) {
-                let id = request.params.id;
-                return data.getUserById(id).then(function (profile) {
-                    console.log(profile);
+                let name = request.params.name;
+                return data.getUserByName(name).then(function (profile) {
                     if (profile !== undefined) {
                         response.setHeader(
                             'Access-Control-Allow-Origin',
@@ -55,7 +54,6 @@ class Profiles {
             check = checkToken(request);
             if (check) {
                 return data.getUsers().then(function (profile) {
-                    console.log(profile);
                     response.setHeader(
                         'Access-Control-Allow-Origin',
                         'http://localhost:3000'
@@ -77,13 +75,13 @@ class Profiles {
             }
         });
 
-        app.get('/api/profiles/changeImage/:id/:image', function (request, response) {
-            let id = request.params.id;
+        app.get('/api/profiles/changeImage/:name/:image', function (request, response) {
+            let name = request.params.name;
             let image = request.params.image;
             let check = false;
             check = checkToken(request);
             if (check) {
-                return data.changeProfileImage(id, image).then(function (profile) {
+                return data.changeProfileImage(name, image).then(function (profile) {
 
                     if (profile !== undefined) {
                         response.setHeader(
@@ -104,20 +102,70 @@ class Profiles {
             }
         });
 
-        app.get('/api/profiles/changeColor/:id/:color', function (request, response) {
-            let id = request.params.id;
+        app.get('/api/profiles/changeColor/:name/:color', function (request, response) {
+            let name = request.params.name;
             let color = request.params.color;
             let check = false;
             check = checkToken(request);
             if (check) {
-                return data.changeColorUser(id, color).then(function (profile) {
-                    console.log(profile);
+                return data.changeColorUser(name, color).then(function (profile) {
                     if (profile !== undefined) {
                         response.setHeader(
                             'Access-Control-Allow-Origin',
                             'http://localhost:3000'
                         );
                         response.status(200).json(profile);
+                        return;
+                    }
+                    response.status(404).json({
+                        key: 'entity.not.found'
+                    });
+                });
+            } else {
+                response.status(400).json({
+                    key: 'There is no Token!'
+                });
+            }
+        });
+
+        app.get('/api/conversations', function (request, response) {
+            let check = false;
+            check = checkToken(request);
+            if (check) {
+                return data.getConversations().then(function (conversation) {
+                    response.setHeader(
+                        'Access-Control-Allow-Origin',
+                        'http://localhost:3000'
+                    );
+                    response.setHeader(
+                        'Access-Control-Allow-Headers',
+                        'my-header-custom'
+                    );
+                    response.setHeader(
+                        'Cache-Control',
+                        'public, max-age=15'
+                    );
+                    response.status(200).json({ conversations: conversation });
+                });
+            } else {
+                response.status(400).json({
+                    key: 'There is no Token!'
+                });
+            }
+        });
+
+        app.get('/api/messages/:id', function (request, response) {
+            let check = false;
+            check = checkToken(request);
+            if (check) {
+                let id = request.params.id;
+                return data.getMessagesByConversation(id).then(function (message) {
+                    if (message !== undefined) {
+                        response.setHeader(
+                            'Access-Control-Allow-Origin',
+                            'http://localhost:3000'
+                        );
+                        response.status(200).json(message);
                         return;
                     }
                     response.status(404).json({

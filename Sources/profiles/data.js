@@ -37,8 +37,8 @@ class Data {
         });
     }
 
-    getUserById(id) {
-        return this.database.query('SELECT * FROM users WHERE id = ' + id).then(rows => {
+    getUserByName(login) {
+        return this.database.query('SELECT * FROM users WHERE login = "' + login + '"').then(rows => {
             return rows;
         });
     }
@@ -56,16 +56,28 @@ class Data {
         });
     }
 
-    changeProfileImage(id, image) {
-        let sql = 'UPDATE users SET image = "' + image + '" WHERE id = ' + id;
+    changeProfileImage(name, image) {
+        let sql = 'UPDATE users SET image = "' + image + '" WHERE name = "' + name + '"';
         return this.database.query(sql).then(rows => {
             return rows;
         });
     }
 
-    changeColorUser(id, color) {
-        let sql = 'UPDATE users SET couleur = "' + color + '" WHERE id = ' + id;
+    changeColorUser(name, color) {
+        let sql = 'UPDATE users SET couleur = "' + color + '" WHERE name = "' + name + '"';
         return this.database.query(sql).then(rows => {
+            return rows;
+        });
+    }
+
+    getConversations() {
+        return this.database.query('SELECT * FROM conversations').then(rows => {
+            return rows;
+        });
+    }
+
+    getMessagesByConversation(idConv) {
+        return this.database.query('SELECT * FROM messages WHERE idConversation = ' + idConv).then(rows => {
             return rows;
         });
     }
