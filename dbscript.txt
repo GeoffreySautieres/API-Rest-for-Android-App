@@ -16,6 +16,37 @@
 CREATE DATABASE IF NOT EXISTS `android` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `android`;
 
+-- Listage de la structure de la table android. conversations
+CREATE TABLE IF NOT EXISTS `conversations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Clé primaire',
+  `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'indique si la conversation est active',
+  `theme` varchar(40) NOT NULL COMMENT 'Thème de la conversation',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table android.conversations : 2 rows
+/*!40000 ALTER TABLE `conversations` DISABLE KEYS */;
+INSERT INTO `conversations` (`id`, `active`, `theme`) VALUES
+	(12, 1, 'Les cours en IAM'),
+	(2, 1, 'Ballon d\'Or');
+/*!40000 ALTER TABLE `conversations` ENABLE KEYS */;
+
+-- Listage de la structure de la table android. messages
+CREATE TABLE IF NOT EXISTS `messages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identifiant du message',
+  `idConversation` int(11) NOT NULL COMMENT 'Clé étrangère vers la table des conversations',
+  `idAuteur` int(11) NOT NULL COMMENT 'clé étrangère vers la table des auteurs',
+  `contenu` varchar(100) NOT NULL COMMENT 'Contenu du message',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table android.messages : 2 rows
+/*!40000 ALTER TABLE `messages` DISABLE KEYS */;
+INSERT INTO `messages` (`id`, `idConversation`, `idAuteur`, `contenu`) VALUES
+	(3, 2, 1, 'D\'après vous, qui sera ballon d\'Or ?'),
+	(35, 12, 1, 'Que pensez-vous des cours en IAM ?');
+/*!40000 ALTER TABLE `messages` ENABLE KEYS */;
+
 -- Listage de la structure de la table android. users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
