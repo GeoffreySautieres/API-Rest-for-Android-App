@@ -17,3 +17,6 @@ npm-debug.log
 **/uploads/*
 .vscode/**
 Sources/config.js
+package-lock\.json
+
+package\.json
