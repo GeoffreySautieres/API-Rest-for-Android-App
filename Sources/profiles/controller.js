@@ -178,6 +178,33 @@ class Profiles {
                 });
             }
         });
+
+        app.post('/api/addMessage', function (request, response) {
+            let check = false;
+            check = checkToken(request);
+            if (check) {
+                let idConv = request.body.idConv;
+                let idAut = request.body.idAut;
+                let content = request.body.content;
+                return data.addMessage(idConv, idAut, content).then(function (message) {
+                    if (message !== undefined) {
+                        response.setHeader(
+                            'Access-Control-Allow-Origin',
+                            'http://localhost:3000'
+                        );
+                        response.status(200).json(message);
+                        return;
+                    }
+                    response.status(404).json({
+                        key: 'entity.not.found'
+                    });
+                });
+            } else {
+                response.status(400).json({
+                    key: 'There is no Token!'
+                });
+            }
+        });
     }
 }
 module.exports = Profiles;
