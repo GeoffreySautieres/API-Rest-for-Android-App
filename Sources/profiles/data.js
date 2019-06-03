@@ -82,6 +82,13 @@ class Data {
         });
     }
 
+    addMessage(idConv, idAut, content) {
+        let sql = 'INSERT INTO messages (idConversation, idAuteur, contenu) VALUES (' + idConv + ', ' + idAut + ', "' + content + '")';
+        return this.database.query(sql).then(rows => {
+            return rows;
+        });
+    }
+
     close() {
         this.database.close();
     }

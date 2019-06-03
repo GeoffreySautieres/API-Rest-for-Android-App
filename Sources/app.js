@@ -15,37 +15,42 @@ class HandlerGenerator {
 
         let mockedUsername = 'false';
         let mockedPassword = 'false';
-        if (data.getUserByLoginAndPassword(username, password) != null) {
-            mockedUsername = req.body.username;
-            mockedPassword = req.body.password;
-        }
 
-        if (username && password) {
-            if (username === mockedUsername && password === mockedPassword) {
-                let token = jwt.sign({ username: username },
-                    config.secret,
-                    {
-                        expiresIn: '24h' // expires in 24 hours
-                    }
-                );
-                // return the JWT token for the future API calls
-                res.json({
-                    success: true,
-                    message: 'Authentication successful!',
-                    token: token
-                });
+        data.getUserByLoginAndPassword(username, password).then((user) => {
+            console.log(user);
+            if (user.length != 0) {
+                mockedUsername = req.body.username;
+                mockedPassword = req.body.password;
+            }
+            console.log(user.length);
+
+            if (username && password) {
+                if (username === mockedUsername && password === mockedPassword) {
+                    let token = jwt.sign({ username: username },
+                        config.secret,
+                        {
+                            expiresIn: '24h' // expires in 24 hours
+                        }
+                    );
+                    // return the JWT token for the future API calls
+                    res.json({
+                        success: true,
+                        message: 'Authentication successful!',
+                        token: token
+                    });
+                } else {
+                    res.json({
+                        success: false,
+                        message: 'Incorrect username or password'
+                    });
+                }
             } else {
-                res.send(403).json({
+                res.json({
                     success: false,
-                    message: 'Incorrect username or password'
+                    message: 'Authentication failed! Please check the request'
                 });
             }
-        } else {
-            res.send(400).json({
-                success: false,
-                message: 'Authentication failed! Please check the request'
-            });
-        }
+        });
     }
     index(req, res) {
         res.json({
@@ -79,8 +84,6 @@ class App {
             next();
         };
         app.use(middlewareHttp);
-
-
 
         app.post('/login', handlers.login);
         app.get('/', middleware.checkToken, handlers.index);
