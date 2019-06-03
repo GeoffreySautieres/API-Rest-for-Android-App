@@ -49,32 +49,6 @@ class Profiles {
             }
         });
 
-        app.get('/api/profiles', function (request, response) {
-            let check = false;
-            check = checkToken(request);
-            if (check) {
-                return data.getUsers().then(function (profile) {
-                    response.setHeader(
-                        'Access-Control-Allow-Origin',
-                        'http://localhost:3000'
-                    );
-                    response.setHeader(
-                        'Access-Control-Allow-Headers',
-                        'my-header-custom'
-                    );
-                    response.setHeader(
-                        'Cache-Control',
-                        'public, max-age=15'
-                    );
-                    response.status(200).json({ profiles: profile });
-                });
-            } else {
-                response.status(400).json({
-                    key: 'There is no Token!'
-                });
-            }
-        });
-
         app.get('/api/profiles/changeImage/:name/:image', function (request, response) {
             let name = request.params.name;
             let image = request.params.image;

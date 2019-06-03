@@ -31,14 +31,8 @@ class Data {
         this.database = new Database(configDatabase);
     }
 
-    getUsers() {
-        return this.database.query('SELECT * FROM users').then(rows => {
-            return rows;
-        });
-    }
-
     getUserByName(login) {
-        return this.database.query('SELECT * FROM users WHERE login = "' + login + '"').then(rows => {
+        return this.database.query('SELECT id, login, couleur, image FROM users WHERE login = "' + login + '"').then(rows => {
             return rows;
         });
     }
