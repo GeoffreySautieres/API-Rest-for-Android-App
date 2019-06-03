@@ -36,7 +36,8 @@ class HandlerGenerator {
                     res.json({
                         success: true,
                         message: 'Authentication successful!',
-                        token: token
+                        token: token,
+                        user: user
                     });
                 } else {
                     res.json({
