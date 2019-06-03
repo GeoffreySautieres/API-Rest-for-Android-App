@@ -77,7 +77,7 @@ class Data {
     }
 
     getMessagesByConversation(idConv) {
-        return this.database.query('SELECT * FROM messages WHERE idConversation = ' + idConv).then(rows => {
+        return this.database.query('SELECT messages.*, users.login, users.couleur, users.image FROM messages INNER JOIN users ON users.id = messages.idAuteur WHERE idConversation = ' + idConv).then(rows => {
             return rows;
         });
     }

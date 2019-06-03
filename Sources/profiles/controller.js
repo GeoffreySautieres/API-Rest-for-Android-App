@@ -35,7 +35,9 @@ class Profiles {
                             'Access-Control-Allow-Origin',
                             'http://localhost:3000'
                         );
-                        response.status(200).json(profile);
+                        response.status(200).json({
+                            profile: profile
+                        });
                         return;
                     }
                     response.status(404).json({
@@ -66,7 +68,9 @@ class Profiles {
                         'Cache-Control',
                         'public, max-age=15'
                     );
-                    response.status(200).json({ profiles: profile });
+                    response.status(200).json({
+                        profiles: profile 
+                    });
                 });
             } else {
                 response.status(400).json({
@@ -88,7 +92,9 @@ class Profiles {
                             'Access-Control-Allow-Origin',
                             'http://localhost:3000'
                         );
-                        response.status(200).json(profile);
+                        response.status(200).json({
+                            profile: profile
+                        });
                         return;
                     }
                     response.status(404).json({
@@ -114,7 +120,9 @@ class Profiles {
                             'Access-Control-Allow-Origin',
                             'http://localhost:3000'
                         );
-                        response.status(200).json(profile);
+                        response.status(200).json({
+                            profile : profile
+                        });
                         return;
                     }
                     response.status(404).json({
@@ -145,7 +153,9 @@ class Profiles {
                         'Cache-Control',
                         'public, max-age=15'
                     );
-                    response.status(200).json({ conversations: conversation });
+                    response.status(200).json({
+                        conversations: conversation 
+                    });
                 });
             } else {
                 response.status(400).json({
@@ -165,7 +175,9 @@ class Profiles {
                             'Access-Control-Allow-Origin',
                             'http://localhost:3000'
                         );
-                        response.status(200).json(message);
+                        response.status(200).json({
+                            messages: message
+                        });
                         return;
                     }
                     response.status(404).json({
@@ -192,7 +204,9 @@ class Profiles {
                             'Access-Control-Allow-Origin',
                             'http://localhost:3000'
                         );
-                        response.status(200).json(message);
+                        response.status(200).json({
+                            message: message
+                        });
                         return;
                     }
                     response.status(404).json({
