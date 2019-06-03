@@ -163,7 +163,7 @@ class Profiles {
             }
         });
 
-        app.post('/api/message', function (request, response) {
+        app.post('/api/messages', function (request, response) {
             let check = false;
             check = checkToken(request);
             if (check) {
